@@ -8,10 +8,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - test-asp.binaro.uno
+        - test-asp.barbariska.fun
       secretName: test-asp-tls
   rules:
-    - host: test-asp.binaro.uno
+    - host: test-asp.barbariska.fun
       http:
         paths:
           - path: /
