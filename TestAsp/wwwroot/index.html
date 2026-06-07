@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test ASP.NET Project</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1e1e2e; color: #cdd6f4; padding: 20px; }
+        .container { max-width: 600px; margin: auto; background: #313244; padding: 20px; border-radius: 8px; }
+        input, button { width: 100%; padding: 10px; margin-top: 10px; border-radius: 4px; border: none; box-sizing: border-box; }
+        button { background: #89b4fa; color: #11111b; font-weight: bold; cursor: pointer; }
+        .record { background: #45475a; padding: 10px; margin-top: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🐼 G.E.N.A. ASP.NET Test</h2>
+        <input type="text" id="title" placeholder="Заголовок">
+        <input type="text" id="message" placeholder="Повідомлення">
+        <button onclick="saveRecord()">Зберегти в БД</button>
+
+        <h3 style="margin-top: 30px;">Збережені записи:</h3>
+        <div id="recordsList"></div>
+    </div>
+
+    <script>
+        async function loadRecords() {
+            const res = await fetch('/api/records');
+            const data = await res.json();
+            const list = document.getElementById('recordsList');
+            list.innerHTML = '';
+            data.forEach(item => {
+                list.innerHTML += `<div class="record"><strong>${item.title}</strong>: ${item.message}</div>`;
+            });
+        }
+
+        async function saveRecord() {
+            const title = document.getElementById('title').value;
+            const message = document.getElementById('message').value;
+            if (!title || !message) return;
+
+            await fetch('/api/records', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, message })
+            });
+
+            document.getElementById('title').value = '';
+            document.getElementById('message').value = '';
+            loadRecords();
+        }
+
+        loadRecords();
+    </script>
+</body>
+</html>
