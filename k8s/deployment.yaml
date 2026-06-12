@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: test-asp
-          image: registry.registry.svc.cluster.local:5000/test-asp:build-run-7a2d4
+          image: registry.registry.svc.cluster.local:5000/test-asp:build-run-dcd87
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
